@@ -4,8 +4,19 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.Callback;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 public class Producer {
+    private static class ProducerCallback implements Callback {
+        @Override
+        public void onCompletion(RecordMetadata metadata, Exception exception) {
+            if (exception != null) {
+                exception.printStackTrace(); // Some errors logic
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
 
@@ -37,7 +48,7 @@ public class Producer {
         ProducerRecord<String, String> record = new ProducerRecord<>("test", "Hello, World!");
 
         try {
-            producer.send(record).get();
+            producer.send(record, new ProducerCallback());
         } catch (Exception e) {
             e.printStackTrace();
         }
