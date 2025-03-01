@@ -40,6 +40,7 @@ public class Producer {
                         kafka2Port
                 )
         );
+        kafkaProps.put("client.id", "demo-producer");
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
