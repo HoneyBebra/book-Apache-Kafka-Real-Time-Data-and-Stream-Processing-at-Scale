@@ -41,6 +41,8 @@ public class Producer {
                 )
         );
         kafkaProps.put("client.id", "demo-producer");
+        kafkaProps.put("acks", "all");
+        kafkaProps.put("delivery.timeout.ms", "120000");
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
