@@ -41,8 +41,8 @@ public class Producer {
                 )
         );
         kafkaProps.put("client.id", "demo-producer");
-        kafkaProps.put("acks", "all");
-        kafkaProps.put("delivery.timeout.ms", "120000");
+        kafkaProps.put("acks", "all");  // How many partition replicas must receive a message for the send to be considered successful
+        kafkaProps.put("delivery.timeout.ms", "120000");  // the number of attempts is unlimited, but the time for sending is limited
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
