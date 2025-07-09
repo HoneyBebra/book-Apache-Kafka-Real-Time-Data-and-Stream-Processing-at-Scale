@@ -45,6 +45,7 @@ public class Producer {
         kafkaProps.put("delivery.timeout.ms", "120000");  // the number of attempts is unlimited, but the time for sending is limited
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        kafkaProps.put("enable.idempotence", "true");
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(kafkaProps);
 
