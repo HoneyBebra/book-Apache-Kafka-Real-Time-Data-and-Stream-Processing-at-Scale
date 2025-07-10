@@ -7,16 +7,22 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+// Класс для отправки сообщений в Kafka
 public class Producer {
     private static class ProducerCallback implements Callback {
-        @Override
+        @Override  // Переопределение метода из интерфейса Callback
         public void onCompletion(RecordMetadata metadata, Exception exception) {
             if (exception != null) {
-                exception.printStackTrace(); // Some errors logic
+                exception.printStackTrace(); // Логика обработки ошибок
             }
         }
     }
 
+    // public - открытый метод
+    // static - статический метод
+    // void - метод не возвращает значения
+    // main - имя метода
+    // String[] args - массив строк аргументов
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
 
@@ -41,8 +47,8 @@ public class Producer {
                 )
         );
         kafkaProps.put("client.id", "demo-producer");
-        kafkaProps.put("acks", "all");  // How many partition replicas must receive a message for the send to be considered successful
-        kafkaProps.put("delivery.timeout.ms", "120000");  // the number of attempts is unlimited, but the time for sending is limited
+        kafkaProps.put("acks", "all");  // Сколько реплик раздела должны получить сообщение, чтобы отправка считалась успешной
+        kafkaProps.put("delivery.timeout.ms", "120000");  // Количество попыток отправки не ограничено, но время отправки ограничено
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("enable.idempotence", "true");
