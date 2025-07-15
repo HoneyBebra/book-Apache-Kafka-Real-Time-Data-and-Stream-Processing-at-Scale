@@ -8,7 +8,7 @@ services:
       - "${KAFKA_0_PORT}:${KAFKA_0_PORT}"
     environment:
       - KAFKA_ENABLE_KRAFT=yes
-      - ALLOW_PLAINTEXT_LISTENER=yes  # Data is transmitted without encryption (not recommended for production)
+      - ALLOW_PLAINTEXT_LISTENER=yes  # Данные передаются без шифрования (не рекомендуется для прода)
 
       # KRAFT config
       - KAFKA_CFG_NODE_ID=0
@@ -69,6 +69,17 @@ services:
     environment:
       - KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS=kafka-0:${KAFKA_PLAINTEXT_PORT}
       - KAFKA_CLUSTERS_0_NAME=kraft
+  
+  # Временно не используется
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.0
+    container_name: schema-registry
+    ports:
+      - "${SCHEMA_REGISTRY_PORT}:${SCHEMA_REGISTRY_PORT}"
+    environment:
+      - SCHEMA_REGISTRY_HOST_NAME=schema-registry
+      - SCHEMA_REGISTRY_LISTENERS=http://0.0.0.0:${SCHEMA_REGISTRY_PORT}
+      - SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS=PLAINTEXT://kafka-0:${KAFKA_PLAINTEXT_PORT},PLAINTEXT://kafka-1:${KAFKA_PLAINTEXT_PORT},PLAINTEXT://kafka-2:${KAFKA_PLAINTEXT_PORT}
 
 volumes:
   kafka_0_data:
